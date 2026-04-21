@@ -8,6 +8,7 @@ import Dashboard from "@/pages/Dashboard";
 import Todos from "@/pages/Todos";
 import CalendarPage from "@/pages/CalendarPage";
 import Assignments from "@/pages/Assignments";
+import Files from "@/pages/Files";
 import Analytics from "@/pages/Analytics";
 import GpaCalculator from "@/pages/GpaCalculator";
 import Grading from "@/pages/Grading";
@@ -29,6 +30,7 @@ const App = () => (
             <Route path="/todos" element={<Todos />} />
             <Route path="/calendar" element={<CalendarPage />} />
             <Route path="/assignments" element={<Assignments />} />
+            <Route path="/files" element={<Files />} />
             <Route path="/analytics" element={<Analytics />} />
             <Route path="/gpa-calculator" element={<GpaCalculator />} />
             <Route path="/grading" element={<Grading />} />
