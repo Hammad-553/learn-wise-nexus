@@ -12,6 +12,7 @@ import {
   ChevronLeft,
   ChevronRight,
   BookOpen,
+  FolderLock,
 } from "lucide-react";
 
 const navItems = [
@@ -19,6 +20,7 @@ const navItems = [
   { to: "/todos", icon: CheckSquare, label: "Todo List" },
   { to: "/calendar", icon: Calendar, label: "Calendar" },
   { to: "/assignments", icon: FolderOpen, label: "Assignments" },
+  { to: "/files", icon: FolderLock, label: "My Files" },
   { to: "/analytics", icon: BarChart3, label: "Analytics" },
   { to: "/gpa-calculator", icon: Calculator, label: "GPA Calculator" },
   { to: "/grading", icon: GraduationCap, label: "Grading Table" },
