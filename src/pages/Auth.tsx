@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, FormEvent } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
@@ -55,9 +55,7 @@ const Auth = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [formError, setFormError] = useState("");
 
-  // Moving button state
-  const [btnOffset, setBtnOffset] = useState({ x: 0, y: 0 });
-  const buttonWrapRef = useRef<HTMLDivElement>(null);
+
 
   useEffect(() => {
     if (!authLoading && user) navigate(from, { replace: true });
@@ -72,28 +70,9 @@ const Auth = () => {
 
   const formValid = mode === "login" ? isLoginValid : isSignupValid;
 
-  const moveButton = () => {
-    const positions = [
-      { x: -120, y: 0 },
-      { x: 120, y: 0 },
-      { x: 0, y: -60 },
-      { x: 0, y: 60 },
-      { x: -100, y: -50 },
-      { x: 100, y: 50 },
-    ];
-    const next = positions[Math.floor(Math.random() * positions.length)];
-    setBtnOffset(next);
-    setFormError("Please fill the input fields before proceeding");
-  };
-
-  const handleButtonHover = () => {
-    if (!formValid) moveButton();
-  };
-
   const resetForm = () => {
     setErrors({});
     setFormError("");
-    setBtnOffset({ x: 0, y: 0 });
   };
 
   const switchMode = (m: Mode) => {
@@ -109,7 +88,7 @@ const Auth = () => {
     setFormError("");
 
     if (!formValid) {
-      moveButton();
+      setFormError("Please fill the input fields before proceeding");
       return;
     }
 
@@ -314,17 +293,8 @@ const Auth = () => {
             </div>
           )}
 
-          <div
-            ref={buttonWrapRef}
-            className="flex justify-center pt-2"
-            onMouseEnter={handleButtonHover}
-          >
-            <Button
-              type="submit"
-              disabled={submitting}
-              className="w-full transition-transform duration-200 ease-out"
-              style={{ transform: `translate(${btnOffset.x}px, ${btnOffset.y}px)` }}
-            >
+          <div className="flex justify-center pt-2">
+            <Button type="submit" disabled={submitting} className="w-full">
               {submitting ? "Please wait..." : mode === "login" ? "Login" : "Sign Up"}
             </Button>
           </div>
