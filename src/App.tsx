@@ -3,7 +3,10 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "@/hooks/useAuth";
+import ProtectedRoute from "@/components/ProtectedRoute";
 import AppLayout from "@/components/AppLayout";
+import Auth from "@/pages/Auth";
 import Dashboard from "@/pages/Dashboard";
 import Todos from "@/pages/Todos";
 import CalendarPage from "@/pages/CalendarPage";
@@ -24,21 +27,33 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <AppLayout>
+        <AuthProvider>
           <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/todos" element={<Todos />} />
-            <Route path="/calendar" element={<CalendarPage />} />
-            <Route path="/assignments" element={<Assignments />} />
-            <Route path="/files" element={<Files />} />
-            <Route path="/analytics" element={<Analytics />} />
-            <Route path="/gpa-calculator" element={<GpaCalculator />} />
-            <Route path="/grading" element={<Grading />} />
-            <Route path="/self-learning" element={<SelfLearning />} />
-            <Route path="/ai-chat" element={<AiChat />} />
-            <Route path="*" element={<NotFound />} />
+            <Route path="/auth" element={<Auth />} />
+            <Route
+              path="/*"
+              element={
+                <ProtectedRoute>
+                  <AppLayout>
+                    <Routes>
+                      <Route path="/" element={<Dashboard />} />
+                      <Route path="/todos" element={<Todos />} />
+                      <Route path="/calendar" element={<CalendarPage />} />
+                      <Route path="/assignments" element={<Assignments />} />
+                      <Route path="/files" element={<Files />} />
+                      <Route path="/analytics" element={<Analytics />} />
+                      <Route path="/gpa-calculator" element={<GpaCalculator />} />
+                      <Route path="/grading" element={<Grading />} />
+                      <Route path="/self-learning" element={<SelfLearning />} />
+                      <Route path="/ai-chat" element={<AiChat />} />
+                      <Route path="*" element={<NotFound />} />
+                    </Routes>
+                  </AppLayout>
+                </ProtectedRoute>
+              }
+            />
           </Routes>
-        </AppLayout>
+        </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
