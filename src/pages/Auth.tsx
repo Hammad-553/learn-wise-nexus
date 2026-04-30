@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, FormEvent } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
@@ -55,9 +55,7 @@ const Auth = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [formError, setFormError] = useState("");
 
-  // Moving button state
-  const [btnOffset, setBtnOffset] = useState({ x: 0, y: 0 });
-  const buttonWrapRef = useRef<HTMLDivElement>(null);
+
 
   useEffect(() => {
     if (!authLoading && user) navigate(from, { replace: true });
