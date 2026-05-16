@@ -35,10 +35,19 @@ const navItems = [
 interface AppSidebarProps {
   mobileOpen?: boolean;
   onMobileClose?: () => void;
+  collapsed?: boolean;
+  onToggleCollapsed?: () => void;
 }
 
-const AppSidebar = ({ mobileOpen = false, onMobileClose }: AppSidebarProps) => {
-  const [collapsed, setCollapsed] = useState(false);
+const AppSidebar = ({
+  mobileOpen = false,
+  onMobileClose,
+  collapsed: collapsedProp,
+  onToggleCollapsed,
+}: AppSidebarProps) => {
+  const [collapsedState, setCollapsedState] = useState(false);
+  const collapsed = collapsedProp ?? collapsedState;
+  const setCollapsed = onToggleCollapsed ?? (() => setCollapsedState((c) => !c));
   const [fullName, setFullName] = useState<string>("");
   const location = useLocation();
   const navigate = useNavigate();
