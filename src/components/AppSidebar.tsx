@@ -83,7 +83,7 @@ const AppSidebar = ({ mobileOpen = false, onMobileClose }: AppSidebarProps) => {
           </div>
           {!collapsed && (
             <span className="text-lg font-bold text-sidebar-foreground tracking-tight">
-              StudyHub
+              AcademiX
             </span>
           )}
           <button

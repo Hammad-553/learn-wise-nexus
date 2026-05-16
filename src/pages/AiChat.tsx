@@ -22,7 +22,7 @@ const AiChat = () => {
     {
       id: "welcome",
       role: "assistant",
-      content: "👋 Hi! I'm your **StudyHub AI Assistant**. I can help you with:\n\n- 📚 Academic questions\n- 🧮 Math problems\n- 💻 Programming help\n- 📝 Study tips & strategies\n- 🔬 Science concepts\n\nAsk me anything! (Connect your Google API key for full AI capabilities)",
+      content: "👋 Hi! I'm your **AcademiX AI Assistant**. I can help you with:\n\n- 📚 Academic questions\n- 🧮 Math problems\n- 💻 Programming help\n- 📝 Study tips & strategies\n- 🔬 Science concepts\n\nAsk me anything! (Connect your Google API key for full AI capabilities)",
       timestamp: new Date(),
     },
   ]);

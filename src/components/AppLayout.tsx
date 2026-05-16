@@ -22,7 +22,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
           <div className="w-7 h-7 rounded-md gradient-accent flex items-center justify-center">
             <GraduationCap className="w-4 h-4 text-secondary" />
           </div>
-          <span className="font-bold tracking-tight">StudyHub</span>
+          <span className="font-bold tracking-tight">AcademiX</span>
         </div>
         <div className="w-9" />
       </header>
