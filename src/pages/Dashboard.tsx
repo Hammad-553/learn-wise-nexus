@@ -103,7 +103,10 @@ const Dashboard = () => {
             <Clock className="w-5 h-5 text-primary" /> Upcoming Deadlines
           </h3>
           <div className="space-y-3">
-            {sampleAssignments.filter(a => a.status !== "completed").slice(0, 4).map(a => (
+            {upcomingDeadlines.length === 0 && (
+              <p className="text-sm text-muted-foreground">No pending deadlines. 🎉</p>
+            )}
+            {upcomingDeadlines.map(a => (
               <div key={a.id} className="flex items-center justify-between p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors">
                 <div>
                   <p className="text-sm font-medium">{a.title}</p>
@@ -128,7 +131,10 @@ const Dashboard = () => {
             <Calendar className="w-5 h-5 text-accent" /> Today's Schedule
           </h3>
           <div className="space-y-3">
-            {sampleEvents.slice(0, 4).map(e => (
+            {todaysSchedule.length === 0 && (
+              <p className="text-sm text-muted-foreground">Nothing scheduled for today.</p>
+            )}
+            {todaysSchedule.map(e => (
               <div key={e.id} className="flex items-center gap-3 p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors">
                 <div className={`w-2 h-8 rounded-full ${
                   e.type === "exam" ? "bg-destructive" :
