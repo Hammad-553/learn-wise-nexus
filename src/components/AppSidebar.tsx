@@ -96,7 +96,10 @@ const AppSidebar = ({ mobileOpen = false, onMobileClose }: AppSidebarProps) => {
         </div>
 
         {/* Nav */}
-        <nav className="flex-1 py-4 px-2 space-y-1 overflow-y-auto">
+        <nav
+          className="flex-1 py-4 px-2 space-y-1 overflow-y-auto"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        >
           {navItems.map((item) => {
             const isActive = location.pathname === item.to;
             return (
