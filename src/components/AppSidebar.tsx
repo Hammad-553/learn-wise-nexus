@@ -35,10 +35,19 @@ const navItems = [
 interface AppSidebarProps {
   mobileOpen?: boolean;
   onMobileClose?: () => void;
+  collapsed?: boolean;
+  onToggleCollapsed?: () => void;
 }
 
-const AppSidebar = ({ mobileOpen = false, onMobileClose }: AppSidebarProps) => {
-  const [collapsed, setCollapsed] = useState(false);
+const AppSidebar = ({
+  mobileOpen = false,
+  onMobileClose,
+  collapsed: collapsedProp,
+  onToggleCollapsed,
+}: AppSidebarProps) => {
+  const [collapsedState, setCollapsedState] = useState(false);
+  const collapsed = collapsedProp ?? collapsedState;
+  const setCollapsed = onToggleCollapsed ?? (() => setCollapsedState((c) => !c));
   const [fullName, setFullName] = useState<string>("");
   const location = useLocation();
   const navigate = useNavigate();
@@ -158,7 +167,7 @@ const AppSidebar = ({ mobileOpen = false, onMobileClose }: AppSidebarProps) => {
           )}
 
           <button
-            onClick={() => setCollapsed(!collapsed)}
+            onClick={() => setCollapsed()}
             className="hidden md:flex w-full items-center justify-center p-2 rounded-lg text-sidebar-foreground/50 hover:text-sidebar-foreground hover:bg-sidebar-accent/50 transition-colors"
           >
             {collapsed ? <ChevronRight className="w-5 h-5" /> : <ChevronLeft className="w-5 h-5" />}
