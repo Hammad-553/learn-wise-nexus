@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Plus, Check, Trash2, Filter } from "lucide-react";
-import { Todo, sampleTodos } from "@/lib/store";
+import { Todo } from "@/lib/store";
+import { useStore, storeActions } from "@/lib/persistentStore";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const Todos = () => {
-  const [todos, setTodos] = useState<Todo[]>(sampleTodos);
+  const todos = useStore(s => s.todos);
+  const setTodos = storeActions.setTodos;
   const [newTodo, setNewTodo] = useState("");
   const [newPriority, setNewPriority] = useState<"low" | "medium" | "high">("medium");
   const [newCategory, setNewCategory] = useState("General");
@@ -22,16 +24,16 @@ const Todos = () => {
       category: newCategory,
       createdAt: new Date().toISOString().split("T")[0],
     };
-    setTodos([todo, ...todos]);
+    setTodos(prev => [todo, ...prev]);
     setNewTodo("");
   };
 
   const toggleTodo = (id: string) => {
-    setTodos(todos.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
+    setTodos(prev => prev.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
   };
 
   const deleteTodo = (id: string) => {
-    setTodos(todos.filter(t => t.id !== id));
+    setTodos(prev => prev.filter(t => t.id !== id));
   };
 
   const filtered = todos.filter(t =>

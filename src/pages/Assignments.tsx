@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Assignment, sampleAssignments } from "@/lib/store";
+import { Assignment } from "@/lib/store";
+import { useStore, storeActions } from "@/lib/persistentStore";
 import { Plus, FileText, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,7 +14,8 @@ const statusColors: Record<string, string> = {
 };
 
 const Assignments = () => {
-  const [assignments, setAssignments] = useState<Assignment[]>(sampleAssignments);
+  const assignments = useStore(s => s.assignments);
+  const setAssignments = storeActions.setAssignments;
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [subject, setSubject] = useState("");
@@ -27,17 +29,17 @@ const Assignments = () => {
       title, subject, dueDate,
       status: "pending", priority,
     };
-    setAssignments([a, ...assignments]);
+    setAssignments(prev => [a, ...prev]);
     setTitle(""); setSubject(""); setDueDate("");
     setOpen(false);
   };
 
   const updateStatus = (id: string, status: Assignment["status"]) => {
-    setAssignments(assignments.map(a => a.id === id ? { ...a, status } : a));
+    setAssignments(prev => prev.map(a => a.id === id ? { ...a, status } : a));
   };
 
   const deleteAssignment = (id: string) => {
-    setAssignments(assignments.filter(a => a.id !== id));
+    setAssignments(prev => prev.filter(a => a.id !== id));
   };
 
   return (
