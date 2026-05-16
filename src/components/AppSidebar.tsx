@@ -125,34 +125,48 @@ const AppSidebar = ({ mobileOpen = false, onMobileClose }: AppSidebarProps) => {
           })}
         </nav>
 
-        {/* User info + sign out */}
-        {user && (
-          <div className="border-t border-sidebar-border px-2 py-3 space-y-2">
-            {!collapsed && (
-              <div className="px-2">
-                <p className="text-xs font-medium text-sidebar-foreground truncate">
+        {/* User card + sign out + collapse */}
+        <div className="mt-auto border-t border-sidebar-border p-3 space-y-2">
+          {user && !collapsed && (
+            <div className="flex items-center gap-3 rounded-xl bg-sidebar-accent/40 p-2.5">
+              <div className="w-9 h-9 rounded-full gradient-accent flex items-center justify-center flex-shrink-0 text-secondary font-semibold text-sm">
+                {(fullName || user.email || "S").charAt(0).toUpperCase()}
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-semibold text-sidebar-foreground truncate">
                   {fullName || "Student"}
                 </p>
                 <p className="text-[11px] text-sidebar-foreground/60 truncate">{user.email}</p>
               </div>
-            )}
+              <button
+                onClick={handleSignOut}
+                aria-label="Sign out"
+                title="Sign out"
+                className="flex-shrink-0 p-2 rounded-lg text-sidebar-foreground/70 hover:text-sidebar-primary hover:bg-sidebar-background/40 transition-colors"
+              >
+                <LogOut className="w-4 h-4" />
+              </button>
+            </div>
+          )}
+
+          {user && collapsed && (
             <button
               onClick={handleSignOut}
-              className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent/50 transition-colors"
+              aria-label="Sign out"
+              title="Sign out"
+              className="w-full flex items-center justify-center p-2 rounded-lg text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent/50 transition-colors"
             >
-              <LogOut className="w-5 h-5 flex-shrink-0" />
-              {!collapsed && <span className="text-sm font-medium">Sign out</span>}
+              <LogOut className="w-5 h-5" />
             </button>
-          </div>
-        )}
+          )}
 
-        {/* Collapse button - desktop only */}
-        <button
-          onClick={() => setCollapsed(!collapsed)}
-          className="hidden md:block mx-2 mb-4 p-2 rounded-lg text-sidebar-foreground/50 hover:text-sidebar-foreground hover:bg-sidebar-accent/50 transition-colors"
-        >
-          {collapsed ? <ChevronRight className="w-5 h-5" /> : <ChevronLeft className="w-5 h-5" />}
-        </button>
+          <button
+            onClick={() => setCollapsed(!collapsed)}
+            className="hidden md:flex w-full items-center justify-center p-2 rounded-lg text-sidebar-foreground/50 hover:text-sidebar-foreground hover:bg-sidebar-accent/50 transition-colors"
+          >
+            {collapsed ? <ChevronRight className="w-5 h-5" /> : <ChevronLeft className="w-5 h-5" />}
+          </button>
+        </div>
       </aside>
     </>
   );
