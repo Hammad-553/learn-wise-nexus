@@ -36,6 +36,10 @@ const Assignments = () => {
     setAssignments(assignments.map(a => a.id === id ? { ...a, status } : a));
   };
 
+  const deleteAssignment = (id: string) => {
+    setAssignments(assignments.filter(a => a.id !== id));
+  };
+
   return (
     <div className="space-y-6 animate-slide-up">
       <div className="flex items-center justify-between">
