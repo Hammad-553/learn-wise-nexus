@@ -167,7 +167,7 @@ const AppSidebar = ({
           )}
 
           <button
-            onClick={() => setCollapsed(!collapsed)}
+            onClick={() => setCollapsed()}
             className="hidden md:flex w-full items-center justify-center p-2 rounded-lg text-sidebar-foreground/50 hover:text-sidebar-foreground hover:bg-sidebar-accent/50 transition-colors"
           >
             {collapsed ? <ChevronRight className="w-5 h-5" /> : <ChevronLeft className="w-5 h-5" />}
