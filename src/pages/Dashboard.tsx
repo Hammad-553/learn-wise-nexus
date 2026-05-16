@@ -1,6 +1,7 @@
 import { CheckSquare, Calendar, FolderOpen, TrendingUp, Clock, Target } from "lucide-react";
 import StatCard from "@/components/StatCard";
-import { sampleTodos, sampleAssignments, sampleEvents, weeklyData, subjectDistribution } from "@/lib/store";
+import { weeklyData, subjectDistribution } from "@/lib/store";
+import { useStore } from "@/lib/persistentStore";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell, AreaChart, Area,
@@ -9,10 +10,27 @@ import {
 const CHART_COLORS = ["#0C6478", "#09D1C7", "#213A58", "#54162B", "#15929B"];
 
 const Dashboard = () => {
-  const pendingTodos = sampleTodos.filter(t => !t.completed).length;
-  const completedTodos = sampleTodos.filter(t => t.completed).length;
-  const pendingAssignments = sampleAssignments.filter(a => a.status !== "completed").length;
-  const upcomingEvents = sampleEvents.length;
+  const todos = useStore(s => s.todos);
+  const assignments = useStore(s => s.assignments);
+  const events = useStore(s => s.events);
+
+  const today = new Date().toISOString().split("T")[0];
+  const weekFromNow = new Date(Date.now() + 7 * 86400000).toISOString().split("T")[0];
+
+  const pendingTodos = todos.filter(t => !t.completed).length;
+  const completedTodos = todos.filter(t => t.completed).length;
+  const pendingAssignments = assignments.filter(a => a.status !== "completed").length;
+  const upcomingEvents = events.filter(e => e.date >= today && e.date <= weekFromNow).length;
+
+  const upcomingDeadlines = assignments
+    .filter(a => a.status !== "completed" && a.dueDate)
+    .sort((a, b) => a.dueDate.localeCompare(b.dueDate))
+    .slice(0, 4);
+
+  const todaysSchedule = events
+    .filter(e => e.date === today)
+    .sort((a, b) => (a.time || "").localeCompare(b.time || ""));
+
 
   return (
     <div className="space-y-6 animate-slide-up">
