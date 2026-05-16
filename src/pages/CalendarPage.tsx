@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Calendar } from "@/components/ui/calendar";
-import { sampleEvents, CalendarEvent } from "@/lib/store";
+import { CalendarEvent } from "@/lib/store";
+import { useStore, storeActions } from "@/lib/persistentStore";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,7 +18,8 @@ const eventTypeColors: Record<string, string> = {
 
 const CalendarPage = () => {
   const [date, setDate] = useState<Date | undefined>(new Date());
-  const [events, setEvents] = useState<CalendarEvent[]>(sampleEvents);
+  const events = useStore(s => s.events);
+  const setEvents = storeActions.setEvents;
   const [newTitle, setNewTitle] = useState("");
   const [newType, setNewType] = useState<CalendarEvent["type"]>("class");
   const [newTime, setNewTime] = useState("");
@@ -35,7 +37,7 @@ const CalendarPage = () => {
       type: newType,
       time: newTime || undefined,
     };
-    setEvents([...events, event]);
+    setEvents(prev => [...prev, event]);
     setNewTitle("");
     setNewTime("");
     setOpen(false);
