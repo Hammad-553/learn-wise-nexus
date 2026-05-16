@@ -4,10 +4,16 @@ import AppSidebar from "./AppSidebar";
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
 
   return (
     <div className="min-h-screen bg-background">
-      <AppSidebar mobileOpen={mobileOpen} onMobileClose={() => setMobileOpen(false)} />
+      <AppSidebar
+        mobileOpen={mobileOpen}
+        onMobileClose={() => setMobileOpen(false)}
+        collapsed={collapsed}
+        onToggleCollapsed={() => setCollapsed((c) => !c)}
+      />
 
       {/* Mobile top bar */}
       <header className="md:hidden sticky top-0 z-40 flex items-center justify-between px-4 h-14 bg-background/90 backdrop-blur border-b border-border">
@@ -27,10 +33,12 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
         <div className="w-9" />
       </header>
 
-      <main className="md:ml-[240px] min-h-screen transition-all duration-300">
-        <div className="p-4 sm:p-6 max-w-7xl mx-auto">
-          {children}
-        </div>
+      <main
+        className={`min-h-screen transition-all duration-300 ${
+          collapsed ? "md:ml-[72px]" : "md:ml-[240px]"
+        }`}
+      >
+        <div className="p-4 sm:p-6 max-w-7xl mx-auto">{children}</div>
       </main>
     </div>
   );
