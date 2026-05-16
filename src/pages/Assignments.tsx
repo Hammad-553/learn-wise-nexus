@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Assignment, sampleAssignments } from "@/lib/store";
-import { Plus, FileText } from "lucide-react";
+import { Plus, FileText, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
