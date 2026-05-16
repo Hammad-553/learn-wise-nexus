@@ -74,14 +74,24 @@ const Assignments = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {assignments.map(a => (
           <div key={a.id} className="glass-card rounded-xl p-5 hover:shadow-lg transition-shadow">
-            <div className="flex items-start justify-between mb-3">
-              <div className="p-2 rounded-lg bg-primary/10">
-                <FileText className="w-5 h-5 text-primary" />
+              <div className="flex items-start justify-between mb-3">
+                <div className="p-2 rounded-lg bg-primary/10">
+                  <FileText className="w-5 h-5 text-primary" />
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${statusColors[a.status]}`}>
+                    {a.status}
+                  </span>
+                  <button
+                    onClick={() => deleteAssignment(a.id)}
+                    aria-label="Delete assignment"
+                    title="Delete"
+                    className="p-1.5 rounded-md text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
-              <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${statusColors[a.status]}`}>
-                {a.status}
-              </span>
-            </div>
             <h3 className="font-semibold text-sm">{a.title}</h3>
             <p className="text-xs text-muted-foreground mt-1">{a.subject}</p>
             {a.description && <p className="text-xs text-muted-foreground mt-2">{a.description}</p>}
